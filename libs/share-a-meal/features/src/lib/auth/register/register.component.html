@@ -1,0 +1,77 @@
+<div class="container-fluid w-50">
+  <div class="mt-5">
+    <h2 class="mb-5 text-center">Registeren</h2>
+
+    <form class="form-signin" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <label for="inputNaam">Name</label><br>
+        <input type="text" class="form-control" formControlName="name" id="inputNaam" [ngClass]="{
+              'is-invalid':
+                registerForm.get('name')?.invalid &&
+                registerForm.get('name')?.touched
+            }" />
+        <span *ngIf="!registerForm.get('name')?.valid && registerForm.get('name')?.touched" class="invalid-feedback">
+          <p id="name-invalid">Name is not valid.</p>
+        </span>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="inputBirthday">Birthday</label><br>
+          <input type="date" class="form-control" formControlName="bday" id="inputBirthday" [ngClass]="{
+              'is-invalid':
+                registerForm.get('bday')?.invalid &&
+                registerForm.get('bday')?.touched
+            }" />
+          <span *ngIf="!registerForm.get('bday')?.valid && registerForm.get('bday')?.touched" class="invalid-feedback">
+            <p id="bday-invalid">Birthday is not valid.</p>
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="inputEmail">Email</label><br>
+        <input type="email" class="form-control" formControlName="email" id="inputEmail" aria-describedby="emailHelp"
+          [ngClass]="{
+            'is-invalid':
+              registerForm.get('email')?.invalid &&
+              registerForm.get('email')?.touched
+          }" />
+        <span *ngIf="registerForm.get('email')?.hasError('invalidEmail') && registerForm.get('email')?.touched"
+          class="invalid-feedback">
+          <p id="email-invalid">Voer een geldig e-mailadres in</p>
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label for="inputPassword">Password</label><br>
+        <label class="rule">Password must contain at least one uppercase letter, one lowercase letter and one number and
+          be at least 8 characters long.</label>
+        <div class="input-group">
+          <input type="{{ hidePassword ? 'password' : 'text' }}" class="form-control" formControlName="password"
+            id="inputPassword" [ngClass]="{
+              'is-invalid':
+                registerForm.get('password')?.invalid &&
+                registerForm.get('password')?.touched
+            }" />
+          <div class="input-group-append">
+            <button class="btn btn-info" type="button" (click)="togglePasswordVisibility()">
+              {{ hidePassword ? 'Show' : 'Hide' }}
+            </button>
+          </div>
+        </div>
+        <span
+          *ngIf="registerForm.get('password')?.hasError('invalidPassword')  && registerForm.get('password')?.touched"
+          class="invalid-feedback">
+          <p id="password-invalid">Enter a valid password.</p>
+        </span>
+      </div>
+
+      <div class="form-group text-center">
+        <button id="submitbutton" class="register btn" type="submit">Register</button>
+        <div *ngIf="loginError" class="error-message">Invalid data.</div>
+      </div>
+
+    </form>
+  </div>
+</div>
